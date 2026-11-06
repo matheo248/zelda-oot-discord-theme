@@ -1,0 +1,512 @@
+/**
+ * @name Zelda — Ocarina of Time
+ * @description Vencord/Discord-Theme im Look von The Legend of Zelda: Ocarina of Time (N64, 1998): Gold, Waldgrün und Schwarz, Hyrule-Hintergrundbild, goldene Akzente und Noten-UI.
+ * @author AbacusAI Bot
+ * @version 1.0.0
+ * @source https://github.com/matheo248/zelda-oot-discord-theme
+ */
+
+/* =========================================================
+   ZELDA — OCARINA OF TIME  (Vencord / BetterDiscord)
+   ---------------------------------------------------------
+   HINTERGRUNDBILD: liegt als  zelda-bg.jpg  neben dieser
+   Theme-Datei und wird relativ geladen – beide Dateien
+   müssen zusammen im Themes-Ordner bleiben.
+   Farben: Gold #e8c547 · Grün #2e6b3e · Schwarz #0d0f0b
+   ========================================================= */
+
+/* =========================================================
+   EINSTELLUNGEN  —  hier anpassen
+   ========================================================= */
+:root {
+    /* Bild */
+    --z-bg: url("zelda-bg.jpg");
+    --z-bg-size: cover;           /* cover | contain | 68vmin    */
+    --z-bg-position: center;      /* center | right center | ...  */
+    --z-bg-attachment: fixed;     /* fixed = Bild bleibt stehen   */
+
+    /* Panels (halbtransparent, damit das Bild durchscheint) */
+    --z-panel: rgba(13, 15, 11, 0.66);
+    --z-panel-strong: rgba(10, 12, 8, 0.82);
+    --z-panel-light: rgba(46, 107, 62, 0.30);
+
+    /* Farben */
+    --z-gold: #e8c547;
+    --z-gold-dark: #a8862a;
+    --z-green: #2e6b3e;
+    --z-green-light: #4f9d63;
+    --z-sheikah: #7ee0e0;
+    --z-black: #0d0f0b;
+    --z-font: "Trebuchet MS", "Verdana", "Segoe UI", sans-serif;
+}
+
+.theme-dark,
+.theme-light {
+    --background-primary: rgba(13, 15, 11, 0.66);
+    --background-secondary: rgba(18, 24, 15, 0.70);
+    --background-secondary-alt: rgba(10, 12, 8, 0.74);
+    --background-tertiary: rgba(7, 9, 6, 0.78);
+    --background-accent: var(--z-gold);
+    --background-floating: rgba(20, 26, 17, 0.94);
+    --background-modifier-hover: rgba(232, 197, 71, 0.16);
+    --background-modifier-active: rgba(232, 197, 71, 0.28);
+    --background-modifier-selected: rgba(46, 107, 62, 0.50);
+    --background-modifier-accent: rgba(232, 197, 71, 0.22);
+
+    --text-normal: #f2ecd8;
+    --text-muted: #b3ad8f;
+    --text-link: var(--z-gold);
+    --header-primary: var(--z-gold);
+    --header-secondary: #cdc59f;
+    --interactive-normal: #e6e0c8;
+    --interactive-hover: var(--z-gold);
+    --interactive-active: #ffffff;
+    --interactive-muted: #5f5c46;
+
+    --channel-text-area-placeholder: #a29c7f;
+    --channel-icon: #cdc59f;
+
+    --brand-experiment: var(--z-green);
+    --brand-experiment-560: #245530;
+    --brand-experiment-600: #1b4025;
+
+    --info-positive-text: var(--z-green-light);
+    --info-warning-text: var(--z-gold);
+    --info-danger-text: #d9483b;
+}
+
+body,
+.theme-dark,
+.theme-light {
+    font-family: var(--z-font);
+    letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   1) VOLLFLÄCHIGER BILD-HINTERGRUND
+   ========================================================= */
+#app-mount {
+    background-color: var(--z-black);
+    background-image: var(--z-bg);
+    background-repeat: no-repeat;
+    background-position: var(--z-bg-position);
+    background-size: var(--z-bg-size);
+    background-attachment: var(--z-bg-attachment);
+}
+
+/* Golder Schimmer + Abdunklung ÜBER dem Bild */
+#app-mount::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(1100px 700px at 15% -10%, rgba(232, 197, 71, 0.26), transparent 62%),
+        radial-gradient(900px 520px at 90% 105%, rgba(46, 107, 62, 0.34), transparent 60%),
+        linear-gradient(160deg, rgba(14, 20, 12, 0.55) 0%, rgba(13, 15, 11, 0.64) 45%, rgba(6, 8, 5, 0.80) 100%);
+}
+
+/* Feines Triforce-Raster + Vignette */
+#app-mount::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(232, 197, 71, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 197, 71, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(6, 8, 5, 0.68) 100%);
+    background-size: 36px 36px, 36px 36px, 100% 100%;
+}
+
+/* UI-Ebene über Bild und Schleier */
+#app-mount > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Discords eigener Hintergrund muss weg, sonst deckt er das Bild zu */
+#app-mount .bg__960e4,
+#app-mount .app__160d8,
+#app-mount .app_a3002d,
+#app-mount .container__2637a,
+#app-mount .base__5e434 {
+    background: transparent !important;
+}
+
+/* =========================================================
+   2) ALLE GROSSEN FLÄCHEN TRANSPARENT
+   ========================================================= */
+#app-mount .chat_f75fb0,
+#app-mount .chatContent_f75fb0,
+#app-mount .chatContent_f75fb0 .wrapper_d852db,
+#app-mount .chatContent_f75fb0 .wrapper_fc8177,
+#app-mount .channelChatWrapper_cb9592,
+#app-mount .container_fc4f04,
+#app-mount .page__5e434,
+#app-mount .container__133bf,
+#app-mount .container__133bf .container__9293f,
+#app-mount .container__133bf .tabBody__133bf,
+#app-mount .container__133bf .nowPlayingColumn__133bf,
+#app-mount .peopleColumn__133bf,
+#app-mount .applicationStore_f07d62,
+#app-mount .homeWrapperNormal__0920e,
+#app-mount .scroller__23746 {
+    background: transparent !important;
+}
+
+/* Panels: halbtransparent statt deckend */
+#app-mount .sidebar_c48ade,
+#app-mount .members_c8ffbb,
+#app-mount .membersWrap_c8ffbb {
+    background-color: var(--z-panel) !important;
+    backdrop-filter: blur(3px);
+}
+
+#app-mount .sidebar_c48ade {
+    border-right: 2px solid rgba(232, 197, 71, 0.35);
+}
+
+#app-mount .members_c8ffbb {
+    border-left: 2px solid rgba(232, 197, 71, 0.30);
+}
+
+/* =========================================================
+   3) SERVERLEISTE
+   ========================================================= */
+#app-mount .guilds_c48ade,
+#app-mount .wrapper_ef3116.guilds__5e434 {
+    background: linear-gradient(180deg, rgba(18, 24, 15, 0.74), rgba(6, 8, 5, 0.84)) !important;
+    border-right: 3px solid var(--z-gold);
+    box-shadow: inset -6px 0 18px rgba(232, 197, 71, 0.14);
+}
+
+#app-mount .listItem_c96c45 .wrapper__6e9f8 .childWrapper__6e9f8,
+#app-mount .listItem_c96c45 .wrapper__6e9f8 .circleIconButton__5bc7e {
+    background-color: rgba(32, 44, 28, 0.85);
+    border: 2px solid transparent;
+    transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+
+#app-mount .listItem_c96c45 .wrapper__6e9f8:hover .childWrapper__6e9f8,
+#app-mount .listItem_c96c45.selected_ae80f7 .childWrapper__6e9f8 {
+    border-color: var(--z-gold);
+    box-shadow: 0 0 16px rgba(232, 197, 71, 0.70);
+    transform: translateY(-1px);
+}
+
+#app-mount .pill__5bc7e span[style*="height"] {
+    background: var(--z-gold) !important;
+    box-shadow: 0 0 10px rgba(232, 197, 71, 0.9);
+}
+
+/* =========================================================
+   4) KANALLISTE
+   ========================================================= */
+#app-mount .container__551b0 .name__2ea32,
+#app-mount .header__5a1a5 {
+    color: var(--z-gold);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    font-size: 11px;
+    text-shadow: 1px 1px 0 #2b2408;
+}
+
+#app-mount .link__2ea32 {
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+#app-mount .link__2ea32:hover {
+    background: rgba(232, 197, 71, 0.16);
+    border-left-color: var(--z-gold);
+}
+
+#app-mount .modeSelected__2ea32 .link__2ea32,
+#app-mount .containerDefault_c69b6d.selected_c69b6d .wrapper__2ea32 {
+    background: linear-gradient(90deg, rgba(46, 107, 62, 0.90), rgba(46, 107, 62, 0.20)) !important;
+    border-left-color: var(--z-gold);
+    box-shadow: inset 0 0 18px rgba(79, 157, 99, 0.40);
+}
+
+#app-mount .modeSelected__2ea32 .name__2ea32 {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+#app-mount .unread__2ea32 {
+    background: var(--z-gold);
+    box-shadow: 0 0 8px rgba(232, 197, 71, 0.9);
+}
+
+/* Panels unten (eigener Name / Voice) */
+#app-mount .panels_c48ade,
+#app-mount .container__37e49 {
+    background: linear-gradient(180deg, rgba(18, 24, 15, 0.74), rgba(6, 8, 5, 0.84));
+    border-top: 2px solid rgba(232, 197, 71, 0.32);
+}
+
+/* =========================================================
+   5) CHAT-KOPF
+   ========================================================= */
+#app-mount .title_f75fb0,
+#app-mount .upperContainer__9293f,
+#app-mount .header__0b91c {
+    background: linear-gradient(90deg, rgba(18, 24, 15, 0.82), rgba(13, 15, 11, 0.72)) !important;
+    border-bottom: 3px solid var(--z-gold);
+}
+
+#app-mount .title_f75fb0 h1,
+#app-mount .title_f75fb0 .channelName__2ea32 {
+    color: var(--z-gold);
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    text-shadow: 2px 2px 0 #2b2408;
+}
+
+/* =========================================================
+   6) NACHRICHTEN  —  goldene Message-Bar
+   ========================================================= */
+#app-mount .message__5126c {
+    border-left: 3px solid transparent;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+#app-mount .message__5126c:hover {
+    background: rgba(232, 197, 71, 0.10);
+    border-left-color: var(--z-gold);
+    box-shadow: inset 0 0 24px rgba(232, 197, 71, 0.08);
+}
+
+/* Erwähnt: goldener Balken links + Triforce */
+#app-mount .message__5126c.mentioned__5126c,
+#app-mount .mentioned__5126c {
+    background: linear-gradient(90deg, rgba(232, 197, 71, 0.18), rgba(232, 197, 71, 0.04)) !important;
+    border-left: 4px solid var(--z-gold);
+}
+
+#app-mount .mentioned__5126c::before {
+    background: var(--z-gold) !important;
+    width: 4px;
+}
+
+#app-mount .message__5126c.mentioned__5126c::after {
+    content: "▲";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--z-gold);
+    font-size: 13px;
+    text-shadow: 0 0 8px rgba(232, 197, 71, 0.9);
+}
+
+/* Goldene Trenner zwischen Nachrichtengruppen */
+#app-mount .group-spacing {
+    border-top: 1px solid rgba(232, 197, 71, 0.12);
+}
+
+#app-mount .message__5126c .username__81ee8 {
+    font-weight: 800;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+#app-mount .timestamp__81ee8 {
+    color: #b3ad8f;
+}
+
+#app-mount .messageContent__21e69 a,
+#app-mount .anchor_b3d8d4,
+#app-mount a[target="_blank"] {
+    color: var(--z-gold);
+    text-decoration: underline dotted;
+}
+
+#app-mount .repliedMessage__5126c::before {
+    background: var(--z-gold) !important;
+    opacity: 0.6;
+}
+
+#app-mount .newMessagesBar__0f481 {
+    background-color: var(--z-green) !important;
+    border: 1px solid var(--z-gold);
+}
+
+/* =========================================================
+   7) EINGABEZEILE  —  goldener Ocarina-Rahmen
+   ========================================================= */
+#app-mount .channelTextArea__74017,
+#app-mount .scrollableContainer__74017 {
+    background: rgba(20, 26, 17, 0.92) !important;
+    border: 3px solid var(--z-gold);
+    border-radius: 10px;
+    box-shadow:
+        inset 0 2px 0 rgba(232, 197, 71, 0.25),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.35),
+        0 0 22px rgba(232, 197, 71, 0.30);
+}
+
+#app-mount .textArea__74017,
+#app-mount .placeholder__1b31f {
+    color: #f2ecd8 !important;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+#app-mount .placeholder__1b31f::after {
+    content: " ♪";
+    color: var(--z-gold);
+}
+
+#app-mount .buttons__74017 .button__74017 {
+    color: var(--z-gold);
+    transition: transform 100ms ease;
+}
+
+#app-mount .buttons__74017 .button__74017:hover {
+    color: #fff3c4;
+    transform: translateY(-1px) scale(1.06);
+}
+
+/* =========================================================
+   8) BUTTONS
+   ========================================================= */
+#app-mount .lookFilled__201d5.colorBrand__201d5,
+#app-mount .lookFilled__201d5.colorPrimary__201d5 {
+    background: linear-gradient(180deg, #3f8a52, #2e6b3e);
+    border: 2px solid var(--z-gold);
+    border-bottom-width: 4px;
+    border-radius: 8px;
+    color: #f7f3df;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+    transition: transform 100ms ease, box-shadow 100ms ease;
+}
+
+#app-mount .lookFilled__201d5.colorBrand__201d5:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(232, 197, 71, 0.65);
+}
+
+#app-mount .lookFilled__201d5.colorGreen__201d5 {
+    background: linear-gradient(180deg, #5fc274, #3f8a52);
+    border-color: #b8f0c4;
+}
+
+#app-mount .lookFilled__201d5.colorRed__201d5 {
+    background: linear-gradient(180deg, #e66457, #b03a2e);
+    border-color: #ffb7b0;
+}
+
+/* =========================================================
+   9) MITGLIEDERLISTE
+   ========================================================= */
+#app-mount .member__5d473:hover {
+    background: rgba(46, 107, 62, 0.32);
+    border-radius: 6px;
+}
+
+/* =========================================================
+   10) POPOUTS / MODALS / MENÜS
+   ========================================================= */
+#app-mount .root__49fc1,
+#app-mount .popout__76f04,
+#app-mount .menu__5be41,
+#app-mount .container__55c99,
+#app-mount .container__55c99 ul,
+#app-mount .contentWrapper__08434 {
+    background: linear-gradient(180deg, rgba(20, 26, 17, 0.97), rgba(7, 9, 6, 0.98)) !important;
+    border: 3px solid var(--z-gold);
+    border-radius: 12px;
+    box-shadow:
+        0 0 0 4px rgba(6, 8, 5, 0.9),
+        0 12px 40px rgba(0, 0, 0, 0.85),
+        0 0 30px rgba(232, 197, 71, 0.25);
+}
+
+#app-mount .header__49fc1 {
+    background: linear-gradient(90deg, #2e6b3e, #14200f) !important;
+    border-bottom: 3px solid var(--z-gold);
+    border-radius: 9px 9px 0 0;
+}
+
+#app-mount .item__5be41 {
+    border-radius: 6px;
+    color: #f2ecd8;
+    font-weight: 600;
+}
+
+#app-mount .item__5be41:hover {
+    background: var(--z-green);
+    color: #fff;
+}
+
+#app-mount .item__5be41.colorDanger__5be41 {
+    color: #ff9a90;
+}
+
+#app-mount .item__5be41.colorDanger__5be41:hover {
+    background: #b03a2e;
+    color: #fff;
+}
+
+/* User-Popout */
+#app-mount .outer_c0bea0:not(.custom-theme-background),
+#app-mount .outer_c0bea0:not(.custom-theme-background) .inner_c0bea0 {
+    background-color: rgba(20, 26, 17, 0.94) !important;
+}
+
+/* =========================================================
+   11) SCROLLBAR  —  Gold mit grünem Griff
+   ========================================================= */
+#app-mount ::-webkit-scrollbar {
+    width: 12px;
+}
+
+#app-mount ::-webkit-scrollbar-track {
+    background: rgba(6, 8, 5, 0.65);
+    border-left: 2px solid rgba(232, 197, 71, 0.30);
+}
+
+#app-mount ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4f9d63, #2e6b3e);
+    border: 2px solid var(--z-gold);
+    border-radius: 8px;
+}
+
+#app-mount ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #6fc083, #3f8a52);
+    box-shadow: 0 0 10px rgba(232, 197, 71, 0.9);
+}
+
+/* =========================================================
+   12) KLEINE EXTRAS
+   ========================================================= */
+#app-mount .avatar__20a53,
+#app-mount .avatarWrapper__37e49 {
+    filter: drop-shadow(0 0 6px rgba(232, 197, 71, 0.55));
+}
+
+#app-mount .tooltip__7ee71,
+#app-mount .tooltipPrimary__7ee71 {
+    background: rgba(20, 26, 17, 0.97) !important;
+    border: 2px solid var(--z-gold);
+    color: #f2ecd8;
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+::selection {
+    background: var(--z-gold);
+    color: #1d1a06;
+}
+
+#app-mount .container_a1c2b0 {
+    background: var(--z-black);
+}
